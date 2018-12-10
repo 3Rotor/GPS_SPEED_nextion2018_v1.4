@@ -1,0 +1,1 @@
+void SetBst(int inval);

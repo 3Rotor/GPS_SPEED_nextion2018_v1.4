@@ -1,0 +1,1 @@
+void SetSpeed(int inval);

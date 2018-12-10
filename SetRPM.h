@@ -1,0 +1,2 @@
+void SetRPM(int inval);
+

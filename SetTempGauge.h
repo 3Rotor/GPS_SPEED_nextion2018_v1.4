@@ -1,0 +1,2 @@
+void SetTempGauge(int inval);
+

@@ -1,0 +1,2 @@
+void SetFuelGauge(double inval);
+

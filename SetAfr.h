@@ -1,0 +1,1 @@
+void SetAfr(int inval);

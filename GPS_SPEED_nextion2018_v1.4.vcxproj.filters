@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GPS_SPEED_nextion2018_v1.4.ino" />
+    <None Include="EndCmd.ino" />
+    <None Include="Get_AFR.ino" />
+    <None Include="GPS_Loops.ino" />
+    <None Include="SetAfr.ino" />
+    <None Include="SetBst.ino" />
+    <None Include="SetCharts.ino" />
+    <None Include="SetFuelGauge.ino" />
+    <None Include="SetFuelPressure.ino" />
+    <None Include="SetOilPressure.ino" />
+    <None Include="SetRPM.ino" />
+    <None Include="SetSpeed.ino" />
+    <None Include="SetTempGauge.ino" />
+    <None Include="SetTime.ino" />
+    <None Include="Warning_Indicators.ino" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="__vm\.GPS_SPEED_nextion2018_v1.4.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EndCmd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Get_AFR.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GPS_Loops.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SetAfr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SetBst.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SetCharts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SetFuelGauge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SetFuelPressure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SetOilPressure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SetRPM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SetSpeed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SetTempGauge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SetTime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vars.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Warning_Indicators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
