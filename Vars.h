@@ -51,7 +51,7 @@ float VLT = 0;
 char AFR_CHAR[9];
 
 // oil Pressure Averager
-const int OP_AC = 30;
+const int OP_AC = 10;
 double OP_Readings[OP_AC];
 int OP_ArrayIndex = 0;
 double OP_Total = 0;
