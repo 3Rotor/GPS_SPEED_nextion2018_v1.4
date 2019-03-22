@@ -98,11 +98,11 @@ void setup()
 
 
 	//  delay(1000);
-	odototal = 0.5 + (EEPROMReadlong(10) * 0.1);
+	odototal = 1.1 + (EEPROMReadlong(10) * 0.1);
 	//  odototal = 350410;  //for correcting
 	Setodo(odototal);
 
-	triptotal = 0.5 + (EEPROMReadlong(15) * 0.01);
+	triptotal = 1.1 + (EEPROMReadlong(15) * 0.01);
 
 
 	//  Serial.print("what is in the eprom after the write: ");
@@ -122,7 +122,7 @@ void setup()
 	for (int i = 0; i < TG_AC; i++) {
 		TG_Readings[i] = 0;
 	}
-
+	
 	//clear Fuel Gauge averager
 	for (int i = 0; i < FG_AC; i++) {
 		FG_Readings[i] = 0;
@@ -356,7 +356,10 @@ void loop()
 		SetFuelGauge(FG_AverageLevel);
 
 		OPA();
-		long boostval = map(OP_AverageLevel, 10, 125, 100, 700);
+		//bar
+		//long boostval = map(OP_AverageLevel, 10, 125, 100, 700);
+		//PSI
+		long boostval = 14.5038* map(OP_AverageLevel, 10, 105, 190, 490);
 
 		//long boostval = map(analogRead(A10), 80, 990, 30 , 250);
 		//  Serial.print("boostval: ");
@@ -445,7 +448,10 @@ void loop()
 		Serial3.print("bst7seg");
 		Serial3.print(".txt=\"");//micc
 		OPA();
-		long boostval = map(OP_AverageLevel, 10, 125, 100, 700);
+		//bar
+		//long boostval = map(OP_AverageLevel, 10, 125, 100, 700);
+		//PSI
+		long boostval =14.5038* map(OP_AverageLevel, 10, 105, 190, 490);
 
 		//    long boostval = map(analogRead(A10), 80, 990, 30 , 250);
 		//	Serial3.print((boostval * 0.01) - 1);

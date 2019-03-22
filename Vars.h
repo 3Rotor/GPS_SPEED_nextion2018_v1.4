@@ -51,7 +51,7 @@ float VLT = 0;
 char AFR_CHAR[9];
 
 // oil Pressure Averager
-const int OP_AC = 10;
+const int OP_AC = 20;
 double OP_Readings[OP_AC];
 int OP_ArrayIndex = 0;
 double OP_Total = 0;
@@ -59,7 +59,7 @@ double OP_AverageLevel = 00;
 double OP_Level = 0;
 
 // Fuel Pressure Averager
-const int FP_AC = 30;
+const int FP_AC = 20;
 double FP_Readings[FP_AC];
 int FP_ArrayIndex = 0;
 double FP_Total = 0;
@@ -68,7 +68,7 @@ double FP_Level = 0;
 
 
 // Temp Gauge Averager
-const int TG_AC = 60;
+const int TG_AC = 30;
 double TG_Readings[TG_AC];
 int TG_ArrayIndex = 0;
 double TG_Total = 1;
@@ -76,7 +76,7 @@ double TG_AverageLevel = 01;
 double TG_Level = 0;
 
 // Fuel Gauge Averager
-const int FG_AC = 60;
+const int FG_AC = 30;
 double FG_Readings[FG_AC];
 int FG_ArrayIndex = 0;
 double FG_Total = 0;
@@ -84,7 +84,7 @@ double FG_AverageLevel = 00;
 double FG_Level = 0;
 
 // AFR Averager
-const int AFR_AC = 15;
+const int AFR_AC = 10;
 double AFR_Readings[AFR_AC];
 int AFR_ArrayIndex = 0;
 double AFR_Total = 0;
