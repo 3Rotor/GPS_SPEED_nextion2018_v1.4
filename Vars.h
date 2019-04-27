@@ -1,6 +1,6 @@
 #define GPS_TX_DIGITAL_OUT_PIN 2
 #define GPS_RX_DIGITAL_OUT_PIN 3
-const int AC = 19 ; //average count, scope(how many samples)
+const int AC = 15 ; //average count, scope(how many samples)
 bool file_name_set = false;//has a new file name been derived from GPS date/time
 bool serial_print = false; //to activate serial logging
 bool log_array = false;//to include the averaging array in the serial log

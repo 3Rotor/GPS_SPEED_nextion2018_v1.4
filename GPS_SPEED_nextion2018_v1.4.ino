@@ -83,7 +83,7 @@ void setup()
 		if (feedgps());
 	}
 
-	attachInterrupt(digitalPinToInterrupt(interruptPin), rippims, FALLING);
+//	attachInterrupt(digitalPinToInterrupt(interruptPin), rippims, FALLING);
 
 	//Serial.println();
 	//  Serial.print("what is in the eprom first: ");
@@ -133,21 +133,27 @@ void setup()
 		AFR_Readings[i] = 0;
 	}
 
-
+	unsigned long duration;
 }
 
-
+/*
 void rippims()
 {
 	//Each rotation, this interrupt function is run twice, so take that into consideration for
 	//calculating RPM
 	//Update count
 	rpmcount++;
+}*/
+
+long getFrequency(int pin) {
+#define SAMPLES 4
+	long freq = 0;
+	for (unsigned int j = 0; j < SAMPLES; j++) freq += 190000 / pulseIn(pin, HIGH, 100000);
+	return freq / SAMPLES;
 }
 
-
 /*
-  ░░▄▀░░░░░░░░░░░░░░░▀▀▄▄░░░░░
+  ░░▄▀░░░░░░░░░░░░░░░▀▀▄▄░░░░
   ░░▄▀░░░░░░░░░░░░░░░░░░░░▀▄░░░
   ░▄▀░░░░░░░░░░░░░░░░░░░░░░░█░░
   ░█░░░░░░░░░░░░░░░░░░░░░░░░░█░
@@ -173,42 +179,45 @@ void rippims()
 
 void loop()
 {
-	//  delay(80);
-	//Don't process interrupts during calculations
-	detachInterrupt(digitalPinToInterrupt(interruptPin));
-	//Note that this would be 60*1000/(millis() - timeold)*rpmcount if the interrupt
-	//happened once per revolution instead of twice. Other multiples could be used
-	//for multi-bladed propellers or fans
+	rpm = 60 * getFrequency(interruptPin);
 
-	RPMC_Array[ii] = rpmcount;
-	ii++; if (ii >= AC)ii = 0;
+	/*	if (1 == 2) {
+			//  delay(80);
+			//Don't process interrupts during calculations
+			detachInterrupt(digitalPinToInterrupt(interruptPin));
+			//Note that this would be 60*1000/(millis() - timeold)*rpmcount if the interrupt
+			//happened once per revolution instead of twice. Other multiples could be used
+			//for multi-bladed propellers or fans
 
-
-	for (int i = 1; i < AC; i++) {
-		RPMC_Averager = RPMC_Averager + RPMC_Array[i];
-	}
-	RPMC_Averager = RPMC_Averager / AC;
-	//Serial.print(" : ");
-	// Serial.print((RPMC_Averager));
+			RPMC_Array[ii] = rpmcount;
+			ii++; if (ii >= AC)ii = 0;
 
 
-	if ((RPMC_Averager > 0))
-	{
-		rpm = 1.15 * (30 * 1000 / ((micros() - timeold) * 0.001) * RPMC_Averager);
-
-	}
-	else {
-		//    rpm = 0;
-	}
+			for (int i = 1; i < AC; i++) {
+				RPMC_Averager = RPMC_Averager + RPMC_Array[i];
+			}
+			RPMC_Averager = RPMC_Averager / AC;
+			//Serial.print(" : ");
+			// Serial.print((RPMC_Averager));
 
 
-	timeold = micros();
-	rpmcount = 0;
+			if ((RPMC_Averager > 0))
+			{
+				rpm = 1.15 * (30 * 1000 / ((micros() - timeold) * 0.001) * RPMC_Averager);
+
+			}
+			else {
+				//    rpm = 0;
+			}
 
 
-	attachInterrupt(digitalPinToInterrupt(interruptPin), rippims, FALLING);
+			timeold = micros();
+			rpmcount = 0;
 
 
+			attachInterrupt(digitalPinToInterrupt(interruptPin), rippims, FALLING);
+
+		}  */
 	//  rpm = 700 + (map(rpm, 0, 9000, 00, 9000));
 	//rpm = 700+(rpm * 0.84);
 
