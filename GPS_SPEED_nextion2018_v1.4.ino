@@ -943,7 +943,7 @@ void AFR() {
 	// AFR comes in on analog 8 and is a 0~5v signal  blu/yel
 	// float AFR_VAL = (10 + (2 * (analogRead(A8) * 0.0048858125)));
 
-	AFR_Level = (10 + (2 * (analogRead(A8) * 0.0048858125)));
+	AFR_Level = (10 + (2 * (analogRead(A8) * 0.0046858125)));
 	AFR_Total = AFR_Total - AFR_Readings[AFR_ArrayIndex];
 	AFR_Readings[AFR_ArrayIndex] = AFR_Level;
 	AFR_Total = AFR_Total + AFR_Readings[AFR_ArrayIndex];
