@@ -90,7 +90,7 @@ int AFR_ArrayIndex = 0;
 double AFR_Total = 0;
 double AFR_AverageLevel = 00;
 double AFR_Level = 0;
-
+float AFR_Constant = 0.0049858125;
 
 
 //analog inputs

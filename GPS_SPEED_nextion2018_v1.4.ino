@@ -329,20 +329,8 @@ void loop()
 		//    Serial.print("rpms: ");
 		//    Serial.println(RPM_Averager);
 
-
 		Warning_Indicators();
 
-		/*
-		  // AFR come in on analog 8 and is a 0~5v signal  blu/yel
-		  //    float AFR_VAL = (10 + (2 * (analogRead(A8) * 0.0048858125)));
-		  AFR_Array[iii] = Get_AFR();
-		  iii++; if (iii >= AC)iii = 1;
-
-		  for (int i = 1; i < AC; i++) {
-		  AFR_Averager = AFR_Averager + AFR_Array[i];
-		  }
-		  AFR_Averager = (AFR_Averager / (AC + 0));
-		*/
 		//mmmmm
 		AFR();
 		SetAfr(map(AFR_AverageLevel * 100, 1000, 1900, 62, 93));
@@ -370,12 +358,8 @@ void loop()
 		//PSI
 		long boostval = 14.5038* map(OP_AverageLevel, 10, 105, 190, 490);
 
-		//long boostval = map(analogRead(A10), 80, 990, 30 , 250);
-		//  Serial.print("boostval: ");
-		//  Serial.println((boostval * 0.01) - 1);
 		Serial3.print("bst7seg");
 		Serial3.print(".txt=\"");
-		//Serial3.print((boostval * 0.01) - 1);
 		Serial3.print(boostval*0.01);
 		Serial3.print("\"");
 		EndCmd();
@@ -413,20 +397,6 @@ void loop()
 		Warning_Indicators();
 
 
-		/*
-		  // AFR come in on analog 8 and is a 0~5v signal  blu/yel
-		  //  float AFR_VAL = (10 + (2 * (analogRead(A8) * 0.0048858125)));
-
-		  AFR_Array[iii] = Get_AFR();
-		  iii++; if (iii >= AC)iii = 1;
-
-
-		  for (int i = 1; i < AC; i++) {
-		  AFR_Averager = AFR_Averager + AFR_Array[i];
-		  }
-
-		  AFR_Averager = (AFR_Averager / (AC + 0));
-		*/
 		AFR();
 		SetAfr(map(AFR_AverageLevel * 100, 1000, 1900, 62, 93));
 
@@ -494,21 +464,7 @@ void loop()
 
 		Warning_Indicators();
 
-		/*
-		  // AFR come in on analog 8 and is a 0~5v signal  blu/yel
-		  //  float AFR_VAL = (10 + (2 * (analogRead(A8) * 0.0048858125)));
-
-		  AFR_Array[iii] = Get_AFR();
-		  iii++; if (iii >= AC)iii = 1;
-
-
-		  for (int i = 1; i < AC; i++) {
-		  AFR_Averager = AFR_Averager + AFR_Array[i];
-		  }
-
-		  AFR_Averager = (AFR_Averager / (AC + 0));
-
-		*/
+	
 		AFR();
 		SetAfr(map(AFR_AverageLevel * 100, 1000, 1900, 62, 93));
 
@@ -524,11 +480,7 @@ void loop()
 		Serial3.print("\"");
 		EndCmd();
 
-
-
 	}
-
-
 
 
 	if (number == 51) { //pressure screen
@@ -539,16 +491,11 @@ void loop()
 		}
 		RPM_Averager = (RPM_Averager / (AC + 0));
 
-
-
 		OPA();
 		SetOilPressure(map(OP_AverageLevel, 10, 125, 1, 27));
 
-
-
 		FPA();
 		SetFuelPressure(map(FP_AverageLevel, 50, 165, 27, 53));
-
 
 		Serial3.print("spd7seg");
 		Serial3.print(".txt=\"");
@@ -573,49 +520,6 @@ void loop()
 		SetFuelGauge(FG_AverageLevel);
 
 
-		/*   //fuelgauge   red/yel   Pin3
-		  Fuel_Level_Array[fuelcounter] = analogRead(A3);
-		  fuelcounter++; if (fuelcounter >= (AC * 2))fuelcounter = 1;
-
-		  if (millis() - fueltimer > 5000) {
-		   for (int i = 1; i < (AC * 2); i++) {
-			 Fuel_Level_Averager = Fuel_Level_Averager  + Fuel_Level_Array[i];
-		   }
-		   Fuel_Level_Averager = (Fuel_Level_Averager / (AC * 2));
-		   //      SetFuelGauge(map(Fuel_Level_Averager, 10, 340, 20, 1));
-		   SetFuelGauge(Fuel_Level_Averager);
-		   fueltimer = millis();
-
-		  }*/
-
-
-		  //Serial.print("temppin: ");
-		  //Serial.println(map(analogRead(A1), 0, 1023, 0, 1023 ));
-
-
-
-
-
-		  // AFR comes in on analog 8 and is a 0~5v signal  blu/yel
-		  // float AFR_VAL = (10 + (2 * (analogRead(A8) * 0.0048858125)));
-		  /*
-			  AFR_Array[iii] = Get_AFR();
-			  iii++; if (iii >= AC)iii = 1;
-
-			  // Serial.print("AFR Array: ");
-			  // for (int i = 1; i < AC; i++) {
-			  //   Serial.print(AFR_Array[i]);
-			  //   Serial.print(" ");
-			  //} Serial.println(" ");
-
-
-			  for (int i = 1; i < AC; i++) {
-				AFR_Averager = AFR_Averager + AFR_Array[i];
-			  }
-			  //SetAfr(map(AFR_Averager * 100, 1000, 1900, 62, 93));
-
-			  AFR_Averager = (AFR_Averager / (AC + 0));
-		  */
 		AFR();
 		int d1 = AFR_AverageLevel;
 		float f2 = AFR_AverageLevel - d1;
@@ -780,7 +684,8 @@ void loop()
 		if (gps.f_speed_kmph() < 221) Dist = (gps.f_speed_kmph() * (timewait / 1000) / 3600);
 		//  Serial.print("distance: ");
 		//  Serial.println(Dist, 4);
-		acumilator = acumilator + Dist;
+		//this is where we get the distance traveled
+		acumilator = acumilator + (1.1*Dist);  //adding 0.1 for gps laggy startups
 
 		//   Serial.print("trip: ");
 		//   Serial.println(acumilator, 4);
@@ -941,9 +846,9 @@ void FGA() {
 void AFR() {
 
 	// AFR comes in on analog 8 and is a 0~5v signal  blu/yel
-	// float AFR_VAL = (10 + (2 * (analogRead(A8) * 0.0048858125)));
+	// float AFR_VAL = (10 + (2 * (analogRead(A8) * AFR_Constant)));
 
-	AFR_Level = (10 + (2 * (analogRead(A8) * 0.0046858125)));
+	AFR_Level = (9 + (2 * (analogRead(A8) * AFR_Constant)));
 	AFR_Total = AFR_Total - AFR_Readings[AFR_ArrayIndex];
 	AFR_Readings[AFR_ArrayIndex] = AFR_Level;
 	AFR_Total = AFR_Total + AFR_Readings[AFR_ArrayIndex];
