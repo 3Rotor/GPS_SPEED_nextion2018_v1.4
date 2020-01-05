@@ -98,11 +98,14 @@ void setup()
 
 
 	//  delay(1000);
-	odototal = 1.1 + (EEPROMReadlong(10) * 0.1);
+	odototal = 1.9 + (EEPROMReadlong(10) * 0.1);
+//	odototal = 0 + (EEPROMReadlong(10) * 0.1);
 	//  odototal = 350410;  //for correcting
 	Setodo(odototal);
 
-	triptotal = 1.1 + (EEPROMReadlong(15) * 0.01);
+	triptotal = 1.9 + (EEPROMReadlong(15) * 0.01);
+
+//	triptotal = 0 + (EEPROMReadlong(15) * 0.01);
 
 
 	//  Serial.print("what is in the eprom after the write: ");
@@ -181,54 +184,9 @@ void loop()
 {
 	rpm = 60 * getFrequency(interruptPin);
 
-	/*	if (1 == 2) {
-			//  delay(80);
-			//Don't process interrupts during calculations
-			detachInterrupt(digitalPinToInterrupt(interruptPin));
-			//Note that this would be 60*1000/(millis() - timeold)*rpmcount if the interrupt
-			//happened once per revolution instead of twice. Other multiples could be used
-			//for multi-bladed propellers or fans
-
-			RPMC_Array[ii] = rpmcount;
-			ii++; if (ii >= AC)ii = 0;
-
-
-			for (int i = 1; i < AC; i++) {
-				RPMC_Averager = RPMC_Averager + RPMC_Array[i];
-			}
-			RPMC_Averager = RPMC_Averager / AC;
-			//Serial.print(" : ");
-			// Serial.print((RPMC_Averager));
-
-
-			if ((RPMC_Averager > 0))
-			{
-				rpm = 1.15 * (30 * 1000 / ((micros() - timeold) * 0.001) * RPMC_Averager);
-
-			}
-			else {
-				//    rpm = 0;
-			}
-
-
-			timeold = micros();
-			rpmcount = 0;
-
-
-			attachInterrupt(digitalPinToInterrupt(interruptPin), rippims, FALLING);
-
-		}  */
-	//  rpm = 700 + (map(rpm, 0, 9000, 00, 9000));
-	//rpm = 700+(rpm * 0.84);
 
 	RPM_Array[ii] = rpm * 1.0;
 	ii++; if (ii >= AC)ii = 1;
-
-
-	//  Serial.print("averager: ");
-	//  for (int i = 0; i < AC; i++) {Serial.print(RPM_Array[i]);Serial.print(" ");}Serial.println(" ");
-
-
 
 
 	while (Serial3.available() > 0) {
@@ -356,7 +314,8 @@ void loop()
 		//bar
 		//long boostval = map(OP_AverageLevel, 10, 125, 100, 700);
 		//PSI
-		long boostval = 14.5038* map(OP_AverageLevel, 10, 105, 190, 490);
+	//	long boostval = 14.5038* map(OP_AverageLevel, 10, 105, 190, 490);
+		long boostval = (83 * OP_AverageLevel);
 
 		Serial3.print("bst7seg");
 		Serial3.print(".txt=\"");
@@ -430,7 +389,9 @@ void loop()
 		//bar
 		//long boostval = map(OP_AverageLevel, 10, 125, 100, 700);
 		//PSI
-		long boostval =14.5038* map(OP_AverageLevel, 10, 105, 190, 490);
+//		long boostval = 14.5038* map(OP_AverageLevel, 10, 105, 190, 490);
+//		long boostval = 14.5038* map(OP_AverageLevel, 30, 120, 250, 600);
+		long boostval = (83 * OP_AverageLevel);
 
 		//    long boostval = map(analogRead(A10), 80, 990, 30 , 250);
 		//	Serial3.print((boostval * 0.01) - 1);
@@ -493,6 +454,7 @@ void loop()
 
 		OPA();
 		SetOilPressure(map(OP_AverageLevel, 10, 125, 1, 27));
+	
 
 		FPA();
 		SetFuelPressure(map(FP_AverageLevel, 50, 165, 27, 53));
@@ -685,7 +647,7 @@ void loop()
 		//  Serial.print("distance: ");
 		//  Serial.println(Dist, 4);
 		//this is where we get the distance traveled
-		acumilator = acumilator + (1.1*Dist);  //adding 0.1 for gps laggy startups
+		acumilator = acumilator + (1.2*Dist);  //adding 0.2 for gps laggy startups
 
 		//   Serial.print("trip: ");
 		//   Serial.println(acumilator, 4);
