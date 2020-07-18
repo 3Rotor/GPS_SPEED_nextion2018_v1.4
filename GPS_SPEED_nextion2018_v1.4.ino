@@ -98,12 +98,12 @@ void setup()
 
 
 	//  delay(1000);
-	odototal = 1.9 + (EEPROMReadlong(10) * 0.1);
+	odototal = 0.5 + (EEPROMReadlong(10) * 0.1);
 //	odototal = 0 + (EEPROMReadlong(10) * 0.1);
 	//  odototal = 350410;  //for correcting
 	Setodo(odototal);
 
-	triptotal = 1.9 + (EEPROMReadlong(15) * 0.01);
+	triptotal = 0.5 + (EEPROMReadlong(15) * 0.01);
 
 //	triptotal = 0 + (EEPROMReadlong(15) * 0.01);
 

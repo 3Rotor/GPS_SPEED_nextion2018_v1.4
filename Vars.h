@@ -90,7 +90,8 @@ int AFR_ArrayIndex = 0;
 double AFR_Total = 0;
 double AFR_AverageLevel = 00;
 double AFR_Level = 0;
-float AFR_Constant = 0.0049858125;
+// to convert the arduino analog in voltage 
+float AFR_Constant = 0.004887585532746823069403714565; // that is 5/1023  
 
 
 //analog inputs
