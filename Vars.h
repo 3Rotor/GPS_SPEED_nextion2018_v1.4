@@ -1,4 +1,4 @@
-#define GPS_TX_DIGITAL_OUT_PIN 2
+					#define GPS_TX_DIGITAL_OUT_PIN 2
 #define GPS_RX_DIGITAL_OUT_PIN 3
 const int AC = 15 ; //average count, scope(how many samples)
 bool file_name_set = false;//has a new file name been derived from GPS date/time
@@ -42,11 +42,8 @@ volatile float rpmcount;
 double rpm = 0;
 double rpmsaved = 0;
 unsigned long timeold = 0;
-//unsigned long fueltimer = millis();
 double RPM_Averager = 0;
 double RPMC_Averager = 0;
-//double Fuel_Level_Averager =  0;
-//float AFR_Averager = 0;
 float VLT = 0;
 char AFR_CHAR[9];
 
@@ -65,7 +62,6 @@ int FP_ArrayIndex = 0;
 double FP_Total = 0;
 double FP_AverageLevel = 00;
 double FP_Level = 0;
-
 
 // Temp Gauge Averager
 const int TG_AC = 30;
@@ -90,24 +86,20 @@ int AFR_ArrayIndex = 0;
 double AFR_Total = 0;
 double AFR_AverageLevel = 00;
 double AFR_Level = 0;
+
 // to convert the arduino analog in voltage 
 float AFR_Constant = 0.004887585532746823069403714565; // that is 5/1023  
 
-
 //analog inputs
 //these are Pulled up through a 1k0 resistor to 5v
-//Siutible for use on resistive sensors like thermistors
+//for use on resistive sensors like thermistors
 // pin3          fuelgauge    red/yel
 // pin1          Engine temp  red/blk  A1
 // pin2                       red/blu
-
 // pin4          oc
 // pin5          oc
-
-
-
 // pin8          AFR  0~5v signal from controller A8
-// pin10         Boost input from MPX4250  0~5v
+// pin10         Boost input from MPX4250  0~5v  or simmilar
 
 String timold = "";
 int boostold = 0;
@@ -122,11 +114,9 @@ long odotimer = millis();
 long kkkkkk = 346138;
 long odoaddress = 10;
 long tripaddress = 15;
-
 double odototal;
 double triptotal;
 double acumilator;
-
 
 //general Page-control variables
 int number = 48;
@@ -138,11 +128,9 @@ char date_name[16] = {
   0
 };
 
-
 //testing with pot
 int analogPin = 2;
 int val = 0;
-
 String dataString = "";
 String filename;
 float RPM_Array[AC];
@@ -150,6 +138,3 @@ float RPMC_Array[AC];
 int ii = 1;
 float AFR_Array[AC];
 int iii = 1;
-//int fuelcounter = 1;
-//double  Fuel_Level_Array[AC];
-

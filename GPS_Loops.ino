@@ -43,7 +43,6 @@ static void gpsdump(TinyGPS & gps)
   //  ii++;//get average of the full array
   //  if (serial_print && log_array)Serial.print("ar[");
   //  if (array2file)dataString += String("ar[");
-
   //dataString += String("PWM:");
 
   if (serial_print)Serial.println();

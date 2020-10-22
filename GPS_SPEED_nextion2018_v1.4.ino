@@ -1,9 +1,7 @@
 #include <EEPROM.h>
 #include <Nextion.h>
 #include <TinyGPS.h>
-//#include <SD.h>
 #include <SoftwareSerial.h>
-//#include "max6675.h"
 #include "Vars.h"
 #include "Warning_Indicators.h"
 #include "SetTime.h"
@@ -22,11 +20,9 @@
 // a handy asci to hex convertor page
 // https://www.rapidtables.com/convert/number/ascii-hex-bin-dec-converter.html
 
-
 //start up the GPS module
 TinyGPS gps;
 static void gpsdump(TinyGPS &gps);
-
 
 /*
   ░░░░░░░░░░░░░░░░░░░░░░█████████
@@ -48,19 +44,16 @@ static void gpsdump(TinyGPS &gps);
 void setup()
 {
 	for (int i = 0; i < AC; i++)RPM_Array[i] = 0;
-
 	pinMode(RightBlinkPin, INPUT); //red/blk
 	pinMode(LeftBlinkPin, INPUT); //red/blu
 	pinMode(HighbeamPin, INPUT); //grn/blk
 	pinMode(OillightPin, INPUT); //grn/yel
 	pinMode(ExtraPin, INPUT); //grn/yel
-
-	pinMode(interruptPin, INPUT);
+	pinMode(interruptPin, INPUT);  //pin 21
 
 	//start coms with Nextion display
 	delay(500);
 	Serial3.begin(115200);  // Start Serial comunication at baud=115200
-
 
 	//start Arduino serial
 	Serial.begin(115200);
@@ -68,11 +61,9 @@ void setup()
 
 	//start coms with the GPS module
 	// note that pin2 and pin3 are hardware connected to the Serial1 pins on the Mega(18 & 19)
-
 	Serial1.begin(9600);
 	pinMode(GPS_TX_DIGITAL_OUT_PIN, INPUT);
 	pinMode(GPS_RX_DIGITAL_OUT_PIN, INPUT);
-
 	unsigned long start = millis();
 	while (millis() - start < 2000)
 	{
@@ -83,29 +74,21 @@ void setup()
 		if (feedgps());
 	}
 
-//	attachInterrupt(digitalPinToInterrupt(interruptPin), rippims, FALLING);
-
 	//Serial.println();
 	//  Serial.print("what is in the eprom first: ");
 	//  Serial.println(EEPROMReadlong(10));
 	//  delay(1000);
 
 	//Starting at the first byte on the eeprom.
-
 	//Writing first long.
 	// EEPROMWritelong(10, 3465113);
 	// EEPROMWritelong(15, 1623);
 
-
 	//  delay(1000);
-	odototal = 0.5 + (EEPROMReadlong(10) * 0.1);
-//	odototal = 0 + (EEPROMReadlong(10) * 0.1);
-	//  odototal = 350410;  //for correcting
+	odototal = 5 + (EEPROMReadlong(10) * 0.1);
 	Setodo(odototal);
 
-	triptotal = 0.5 + (EEPROMReadlong(15) * 0.01);
-
-//	triptotal = 0 + (EEPROMReadlong(15) * 0.01);
+	triptotal = 5 + (EEPROMReadlong(15) * 0.01);
 
 
 	//  Serial.print("what is in the eprom after the write: ");
@@ -140,7 +123,7 @@ void setup()
 }
 
 /*
-void rippims()
+void rippims() //this was the old way, leaving it here for postarety's sake.
 {
 	//Each rotation, this interrupt function is run twice, so take that into consideration for
 	//calculating RPM
@@ -148,6 +131,7 @@ void rippims()
 	rpmcount++;
 }*/
 
+// This is where the RPM's are being read.
 long getFrequency(int pin) {
 #define SAMPLES 4
 	long freq = 0;
@@ -198,7 +182,6 @@ void loop()
 		{
 			number = PG.toInt();
 			//SetAfr7(PG);
-
 			// delay(20);
 		}
 		if (PG.toInt() == 65)
@@ -268,7 +251,6 @@ void loop()
 		}
 	}
 
-
 	if (number == 48) {
 		SetTime(daytime);
 
@@ -289,7 +271,6 @@ void loop()
 
 		Warning_Indicators();
 
-		//mmmmm
 		AFR();
 		SetAfr(map(AFR_AverageLevel * 100, 1000, 1900, 62, 93));
 		int d1 = AFR_AverageLevel;
@@ -354,11 +335,8 @@ void loop()
 		Serial3.print("\"");
 		EndCmd();
 		Warning_Indicators();
-
-
 		AFR();
 		SetAfr(map(AFR_AverageLevel * 100, 1000, 1900, 62, 93));
-
 		int d1 = AFR_AverageLevel;
 		float f2 = AFR_AverageLevel - d1;
 		int d2 = trunc(f2 * 100);
@@ -369,20 +347,13 @@ void loop()
 		Serial3.print("\"");
 		EndCmd();
 
-		// SetTempGauge(map(analogRead(A1), 1021, 810, 1, 20));
+		// Engine temp  red/blk Pin1
 		TGA();
 		SetTempGauge(TG_AverageLevel);
 
 		//fuelgauge   red/yel   Pin A3
 		FGA();
 		SetFuelGauge(FG_AverageLevel);
-
-
-
-		// Engine temp  red/blk Pin1
-		//    settmpsml(map(analogRead(A1), 000, 922, 20, 30)); //engine temp
-
-
 		Serial3.print("bst7seg");
 		Serial3.print(".txt=\"");//micc
 		OPA();
@@ -396,7 +367,6 @@ void loop()
 		//    long boostval = map(analogRead(A10), 80, 990, 30 , 250);
 		//	Serial3.print((boostval * 0.01) - 1);
 		Serial3.print(boostval*0.01);
-
 		Serial3.print("\"");
 		EndCmd();
 
@@ -404,45 +374,35 @@ void loop()
 
 	}
 
-
 	if (number == 50) {// Boost screen
 		SetTime(daytime);
 
 		//    Serial.print("Boostpin: ");
 		//  Serial.println(map(analogRead(A10), 0, 1023, 0, 1023 ));
 
-
 		SetBst(map(analogRead(A10), 80, 990, 1, 56));
 		Serial3.print("bst7seg");
 		Serial3.print(".txt=\"");
-		//    long boostval = map(analogRead(A10), 0, 1023, 0, 1023);
+//      long boostval = map(analogRead(A10), 0, 1023, 0, 1023);
 		long boostval = map(analogRead(A10), 30, 920, 30, 250);
 		Serial3.print((boostval * 0.01) - 1);
-		//    Serial3.print(boostval);
+//      Serial3.print(boostval);
 
 		Serial3.print("\"");
 		EndCmd();
-
 		Warning_Indicators();
-
-	
 		AFR();
 		SetAfr(map(AFR_AverageLevel * 100, 1000, 1900, 62, 93));
-
 		int d1 = AFR_AverageLevel;
 		float f2 = AFR_AverageLevel - d1;
 		int d2 = trunc(f2 * 100);
 		sprintf(AFR_CHAR, "%02d.%02d   ", d1, d2);
-
-
 		Serial3.print("AFR7");
 		Serial3.print(".txt=\"");
 		Serial3.print(AFR_CHAR);
 		Serial3.print("\"");
 		EndCmd();
-
 	}
-
 
 	if (number == 51) { //pressure screen
 		SetTime(daytime);
@@ -638,7 +598,6 @@ void loop()
 		}
 	}
 
-
 	float timewait = 1000;
 	if (millis() - odotimer > timewait) {// do this every 5 seconds
 		float Dist = 0;
@@ -647,7 +606,7 @@ void loop()
 		//  Serial.print("distance: ");
 		//  Serial.println(Dist, 4);
 		//this is where we get the distance traveled
-		acumilator = acumilator + (1.2*Dist);  //adding 0.2 for gps laggy startups
+		acumilator = acumilator + (1.05*Dist);  //adding 0.05 for gps laggy startups
 
 		//   Serial.print("trip: ");
 		//   Serial.println(acumilator, 4);
@@ -666,11 +625,7 @@ void loop()
 		EEPROMWritelong(tripaddress, (triptotal * 100));
 		odotimer = millis();
 	}
-
-
-
 }  //end of the loop
-
 
 void Setodo(double inval) {
 	String Gaugename = "odo";
@@ -695,8 +650,6 @@ void Settrip(double inval) {
 	Serial3.write(0xff);
 
 }
-
-
 
 //This function will write a 4 byte (32bit) long to the eeprom at
 //the specified address to address + 3.
@@ -737,16 +690,13 @@ long EEPROMReadlong(long address)
 	long three = EEPROM.read(address + 1);
 	long two = EEPROM.read(address + 2);
 	long one = EEPROM.read(address + 3);
-
 	//Return the recomposed long by using bitshift.
 	return ((four << 0) & 0xFF) + ((three << 8) & 0xFFFF) + ((two << 16) & 0xFFFFFF) + ((one << 24) & 0xFFFFFFFF);
-
 }
 
 void FPA() {
 	//fuel Pressure , Analog pin 5; WTE
 	// Fuel Pressure Averager
-
 	FP_Level = analogRead(A5);
 	FP_Total = FP_Total - FP_Readings[FP_ArrayIndex];
 	FP_Readings[FP_ArrayIndex] = FP_Level;
@@ -755,9 +705,7 @@ void FPA() {
 	// At the end of the array  then start again
 	if (FP_ArrayIndex >= FP_AC)FP_ArrayIndex = 0;
 	FP_AverageLevel = FP_Total / FP_AC;
-
 }
-
 
 void OPA() {
 
@@ -773,9 +721,6 @@ void OPA() {
 	OP_AverageLevel = OP_Total / OP_AC;
 }
 
-
-
-
 void TGA() {
 
 	// pin1          Engine temp  red/blk  A1
@@ -789,7 +734,6 @@ void TGA() {
 	if (TG_ArrayIndex >= TG_AC)TG_ArrayIndex = 0;
 	TG_AverageLevel = TG_Total / TG_AC;
 }
-
 
 void FGA() {
 
